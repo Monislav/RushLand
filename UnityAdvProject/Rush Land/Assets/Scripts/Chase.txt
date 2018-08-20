@@ -1,0 +1,4 @@
+tree("Chase")
+	while not TargetPlayer
+		sequence
+			Destination

@@ -1,0 +1,5 @@
+tree("Attack")
+	while TargetPlayer
+		sequence
+			Wait(0.5)
+			Fire

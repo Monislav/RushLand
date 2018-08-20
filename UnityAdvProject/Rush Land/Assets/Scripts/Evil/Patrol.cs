@@ -1,0 +1,38 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class Patrol : BaseFSM {
+    GameObject[] waypoints;
+    public int i;
+
+    public void Awake()
+    {
+            waypoints = GameObject.FindGameObjectsWithTag("Waypoint").OrderBy(x => x.name).ToArray();
+    }
+    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+	}
+
+	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (waypoints.Length == 0)
+            return;
+        if(Vector3.Distance(waypoints[i].transform.position, npc.transform.position) < accuracy)
+        {
+            i++;
+        }
+        var direction = waypoints[i].transform.position - npc.transform.position;
+        npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation, Quaternion.LookRotation(direction), rotation * Time.deltaTime);
+        npc.transform.Translate(0, 0, speed * Time.deltaTime);
+	}
+
+	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+	
+	}
+}

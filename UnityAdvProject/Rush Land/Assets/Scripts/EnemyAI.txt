@@ -1,0 +1,4 @@
+tree("Root")
+	parallel
+		repeat mute tree("Chase")
+		repeat mute tree("Attack")
